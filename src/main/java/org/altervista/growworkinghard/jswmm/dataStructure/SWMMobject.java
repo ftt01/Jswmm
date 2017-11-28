@@ -1,7 +1,10 @@
 package org.altervista.growworkinghard.jswmm.dataStructure;
 
 import org.altervista.growworkinghard.jswmm.dataStructure.formatData.*;
+import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.linkObjects.Conduit;
 import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.nodeObject.AbstractNodes;
+import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.nodeObject.Junction;
+import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.nodeObject.Outfall;
 import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.rainData.AbstractRaingage;
 import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.rainData.Raingage;
 import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.subcatchment.*;
@@ -11,6 +14,7 @@ import org.altervista.growworkinghard.jswmm.dataStructure.options.RoutingSetup;
 
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class SWMMobject {
 
@@ -21,8 +25,11 @@ public class SWMMobject {
 
     AbstractRaingage raingages = new Raingage();
 
-    AbstractNodes nodes;
-    AbstractLinks links;
+    AbstractNodes nodes = new Junction();
+    AbstractNodes outfall = new Outfall();
+
+    AbstractLinks links = new Conduit();
+    AbstractLinks crossSectionData = new Conduit();
     AbstractSubcatchments subcatchments;
     Subarea subarea = new Subarea();
 
@@ -34,7 +41,7 @@ public class SWMMobject {
 
         options.setRoutingModel("STEADY", "H-W",
                 0.0, 0.0, 0.5, RoutingSetup.InertialDamping.NONE,
-                RoutingSetup.NormalFlowLimited.BOTH, 10, 0.01, 8,
+                RoutingSetup.NormalFlowLimited.BOTH, 10.0, 0.01, 8,
                 0.0015);
 
         options.setOffsetConvention("DEPTH");
@@ -148,22 +155,40 @@ public class SWMMobject {
         // [GWF]
         // [SNOWPACKS]
         // [JUNCTIONS]----
-        
+        nodes.setJunctionName("N1");
+        nodes.setJunctionElevation(2.0);
+        nodes.setMaximumDepthNode(3.0);
+        nodes.setInitialdepthNode(0.0);
+        nodes.setMaximumDepthSurcharge(1.0);
+        nodes.setPondingArea(200.0);
 
         // [OUTFALLS]----
-
+        outfall.setJunctionName("OUT1");
+        outfall.setJunctionElevation(2.0);
+        outfall.outfall.setOutfallType(Outfall.OutfallType.FREE);
+        outfall.outfall.setGated(false);
+        outfall.outfall.setRouteTo("N1");
 
         // [DIVIDERS]
         // [STORAGE]
         // [CONDUITS]----
-
+        links.setNameLink("");
+        links.setNameUpstreamNode("");
+        links.setNameDownstreamNode("");
+        links.setLinkLength(2.0);
+        links.setUpstreamOffset(2.0);
+        links.setDownstreamOffset(2.0);
+        links.setInitialFlowRate(0.0);
+        links.setMaximumFlowRate(1.0);
 
         // [PUMPS]
         // [ORIFICES]
         // [WEIRS]
         // [OUTLETS]
         // [XSECTIONS]----
-
+        crossSectionData.conduit.setCrossSectionID("");
+        crossSectionData.conduit.setShape(Conduit.Shape.CIRCULAR);
+        crossSectionData.conduit.setDiameter(2.0);
 
         // [TRANSECTS]
         // [LOSSES]
@@ -183,14 +208,7 @@ public class SWMMobject {
         // [TIMESERIES]----
 
 
+
         // [PATTERNS]
-    }
-
-
-
-    void test() {
-        //for each line of the section [SUBCATCHMENTS]
-        subcatchments[0] = new Subarea("SUB1");
-        subcatchments[0].subareas.pervious.evaluateAlpha();
     }
 }

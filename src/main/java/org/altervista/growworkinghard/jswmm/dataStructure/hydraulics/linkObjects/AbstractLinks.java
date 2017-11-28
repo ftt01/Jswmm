@@ -3,13 +3,95 @@ package org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.linkObject
 import org.altervista.growworkinghard.jswmm.dataStructure.INPlocator;
 
 public abstract class AbstractLinks implements INPlocator {
+
+    String nameLink;
+    String nameUpstreamNode;
+    String nameDownstreamNode;
+    Double linkLength;
+    Double manningRoughnessLink;
+    Double upstreamOffset;
+    Double downstreamOffset;
+    Double initialFlowRate;
+    Double maximumFlowRate;
+
+    public Conduit conduit;
+
+    public String getNameLink() {
+        return nameLink;
+    }
+
+    public void setNameLink(String nameLink) {
+        this.nameLink = nameLink;
+    }
+
+    public String getNameUpstreamNode() {
+        return nameUpstreamNode;
+    }
+
+    public void setNameUpstreamNode(String nameUpstreamNode) {
+        this.nameUpstreamNode = nameUpstreamNode;
+    }
+
+    public String getNameDownstreamNode() {
+        return nameDownstreamNode;
+    }
+
+    public void setNameDownstreamNode(String nameDownstreamNode) {
+        this.nameDownstreamNode = nameDownstreamNode;
+    }
+
+    public Double getLinkLength() {
+        return linkLength;
+    }
+
+    public void setLinkLength(Double linkLength) {
+        this.linkLength = linkLength;
+    }
+
+    public Double getManningRoughnessLink() {
+        return manningRoughnessLink;
+    }
+
+    public void setManningRoughnessLink(Double manningRoughnessLink) {
+        this.manningRoughnessLink = manningRoughnessLink;
+    }
+
+    public Double getUpstreamOffset() {
+        return upstreamOffset;
+    }
+
+    public void setUpstreamOffset(Double upstreamOffset) {
+        this.upstreamOffset = upstreamOffset;
+    }
+
+    public Double getDownstreamOffset() {
+        return downstreamOffset;
+    }
+
+    public void setDownstreamOffset(Double downstreamOffset) {
+        this.downstreamOffset = downstreamOffset;
+    }
+
+    public Double getInitialFlowRate() {
+        return initialFlowRate;
+    }
+
+    public void setInitialFlowRate(Double initialFlowRate) {
+        this.initialFlowRate = initialFlowRate;
+    }
+
+    public Double getMaximumFlowRate() {
+        return maximumFlowRate;
+    }
+
+    public void setMaximumFlowRate(Double maximumFlowRate) {
+        this.maximumFlowRate = maximumFlowRate;
+    }
+
+    /*
     String linkID;
     String upstreamNode;
     String downstreamNode;
-
-    /**
-     *
-     */
     //AbstractCrossSectionData crossSectionProperties;
 
     Double linkFlowRate;
@@ -17,6 +99,7 @@ public abstract class AbstractLinks implements INPlocator {
     Double linkVolume;
 
 
+    */
 
 
 
