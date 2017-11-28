@@ -1,6 +1,12 @@
 package org.altervista.growworkinghard.jswmm.dataStructure.hydrology.subcatchment;
 
-import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.subcatchment.AbstractSubarea;
+public class ImperviousWithoutStorage extends Subarea {
+    public ImperviousWithoutStorage(String ciao) {
+        super(ciao);
+    }
 
-public class ImperviousWithoutStorage extends AbstractSubarea {
+    @Override
+    public void evaluateAlpha() {
+
+    }
 }
