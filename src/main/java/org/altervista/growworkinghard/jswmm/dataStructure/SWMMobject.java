@@ -1,61 +1,46 @@
 package org.altervista.growworkinghard.jswmm.dataStructure;
 
-import org.altervista.growworkinghard.jswmm.dataStructure.formatData.*;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.linkObjects.Conduit;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.nodeObject.AbstractNodes;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.nodeObject.Junction;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.nodeObject.Outfall;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.rainData.AbstractRaingage;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.rainData.Raingage;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydrology.subcatchment.*;
-import org.altervista.growworkinghard.jswmm.dataStructure.hydraulics.linkObjects.AbstractLinks;
-import org.altervista.growworkinghard.jswmm.dataStructure.options.Options;
-import org.altervista.growworkinghard.jswmm.dataStructure.options.RoutingSetup;
-
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class SWMMobject {
 
     Options options = new Options();
-
-    AbstractFilesData filesData = new FileData();
-    AbstractTimeseriesData timeseriesData;
-
+    AbstractFilesData filesData = new AbstractFilesData();
     AbstractRaingage raingages = new Raingage();
 
     AbstractNodes nodes = new Junction();
     AbstractNodes outfall = new Outfall();
-
     AbstractLinks links = new Conduit();
     AbstractLinks crossSectionData = new Conduit();
     AbstractSubcatchments subcatchments;
     Subarea subarea = new Subarea();
 
     public void run() {
+
         //INPparser to select data
         // [TITLE]
         // [OPTIONS]
+        options.units.setCurrentUnits(ProjectUnits.Units.CMS);
         options.setInfiltrationModel("HORTON");
 
-        options.setRoutingModel("STEADY", "H-W",
+        options.setRoutingModel("KINWAVE", "H-W",
                 0.0, 0.0, 0.5, RoutingSetup.InertialDamping.NONE,
-                RoutingSetup.NormalFlowLimited.BOTH, 10.0, 0.01, 8,
+                RoutingSetup.NormalFlowLimited.BOTH, 10.0, 0.0, 8,
                 0.0015);
 
         options.setOffsetConvention("DEPTH");
         options.setIgnoreRainfall(false);
-        options.setIgnoreSnowmelt(false);
-        options.setIgnoreGroundwater(false);
-        options.setIgnoreRDII(false);
-        options.setIgnoreRouting(false);
-        options.setIgnoreQuality(false);
-        options.setAllowPonding(false);
+        options.setIgnoreSnowmelt(true);
+        options.setIgnoreGroundwater(true);
+        options.setIgnoreRDII(true);
+        options.setIgnoreRouting(true);
+        options.setIgnoreQuality(true);
+        options.setAllowPonding(true);
         options.setSteadyStateOptions(false, 0.05, 0.05);
 
-        Instant startDate = null;
-        Instant endDate = null;
+        Instant startDate = Instant.parse("01/01/2000T00:00:00");
+        Instant endDate = Instant.parse("01/01/2000T00:00:00");
         Instant reportStartDate = null;
         Instant reportEndDate = null;
         Instant sweepStart = null;
